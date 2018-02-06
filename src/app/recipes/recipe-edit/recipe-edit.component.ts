@@ -3,6 +3,8 @@ import { OnInit } from '@angular/core/src/metadata/lifecycle_hooks';
 import { ActivatedRoute, Params, Router } from '@angular/router';
 import { FormGroup,FormControl,FormArray, Validators } from '@angular/forms';
 import { RecipeService } from 'app/recipes/recipes.service';
+import { DataStorageService } from 'app/shared/datastorage.service';
+import { Response } from '@angular/http/src/static_response';
 
 @Component({
   selector: 'app-recipe-edit',
@@ -17,6 +19,7 @@ export class RecipeEditComponent implements OnInit{
 
   constructor(private route: ActivatedRoute,
               private recipeService: RecipeService,
+              private dataStorageService: DataStorageService,
               private router: Router) {}
   
   ngOnInit(){
@@ -89,6 +92,7 @@ export class RecipeEditComponent implements OnInit{
     } else {
       this.recipeService.addRecipe(this.recipeForm.value);
     }
+    this.saveRecipesOnRemote();
     this.onCancel();
   }
 
@@ -96,4 +100,8 @@ export class RecipeEditComponent implements OnInit{
     this.router.navigate(['../'], {'relativeTo':this.route});
   }
 
+  saveRecipesOnRemote(){
+    this.dataStorageService.saveRecipesToDB(this.recipeService.getRecipes())
+    .subscribe( (response: Response) => { } );
+  }
 }

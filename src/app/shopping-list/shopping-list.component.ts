@@ -3,6 +3,8 @@ import { Ingredient } from 'app/shared/ingredient.model';
 import { ShoppingListService } from 'app/shopping-list/shopping-list.service';
 import { OnDestroy } from '@angular/core/src/metadata/lifecycle_hooks';
 import { Subscription } from 'rxjs/Subscription';
+import { DataStorageService } from 'app/shared/datastorage.service';
+import { AuthService } from 'app/auth/auth.service';
 
 @Component({
   selector: 'app-shopping-list',
@@ -14,7 +16,9 @@ export class ShoppingListComponent implements OnInit, OnDestroy {
   ingredients: Ingredient[] ;
   subscription: Subscription;
 
-  constructor(private shoppingListService: ShoppingListService) { }
+  constructor(private shoppingListService: ShoppingListService,
+              private dataStorageService: DataStorageService,
+              private authService: AuthService) { }
 
   ngOnInit() {
     this.ingredients = this.shoppingListService.getIngredients();

@@ -16,7 +16,6 @@ export class RecipeListComponent implements OnInit {
   subscription: Subscription;
 
   constructor(private recipesService : RecipeService,
-              private dataService: DataStorageService,
               private router: Router,
               private route: ActivatedRoute) { }
 
@@ -27,7 +26,6 @@ export class RecipeListComponent implements OnInit {
       }
     );
     this.recipes = this.recipesService.getRecipes();
-    //this.dataService.getRecipesFromDB();
   }
 
   onAddNewRecipe(){
